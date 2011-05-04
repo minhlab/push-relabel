@@ -21,7 +21,7 @@
 			var s:State = new State(op,net);
 			_states.push(s);
 			net = net.clone();
-			trace(s.network);
+			//trace(s.network);
 			return s;
 		}
 

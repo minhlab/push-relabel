@@ -15,8 +15,10 @@
     <uri label="PushRelabel.fla">file:///G|/Study n Projects/CNTTvTT/20102/CTDL va Thuat toan tren do thi/demo/PushRelabel.fla</uri>
   </compileList>
   <recentFiles editable="false">
-    <uri label="Pipe.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/objects/Pipe.as</uri>
     <uri label="SimulateEnvironment.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/environments/SimulateEnvironment.as</uri>
+    <uri label="Network.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/algorithm/Network.as</uri>
+    <uri label="Tracer.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/algorithm/Tracer.as</uri>
+    <uri label="Pipe.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/objects/Pipe.as</uri>
     <uri label="SimulationArea.as">file:///D|/data/home/cumeo89/hut/do%20thi/demo/pushrelabel/environments/SimulationArea.as</uri>
     <uri label="PushRelabel.fla">file:///D|/data/home/cumeo89/hut/do%20thi/demo/PushRelabel.fla</uri>
   </recentFiles>

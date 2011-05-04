@@ -21,12 +21,22 @@
 		
 		public function SimulationArea(environment:SimulateEnvironment,network:Network) {
 			_environment = environment;
-			_network = network;
 			// constructor code
-			init();
+			draw();
 		}
 		
-		public function init(){
+		private function removeAllChild(l:MovieClip) {
+			for (var i :int = l.numChildren-1; i >= 0 ; i--) {
+				l.removeChildAt(i);
+			}
+		}
+		
+		private function clear() {
+			removeAllChild(tankLayer);
+			removeAllChild(pipeLayer);
+		}
+		
+		public function draw(){
 			var i:int, j:int;
 
 			_tanks= new Array(_network.n);
@@ -59,8 +69,8 @@
 						var pipe : Pipe = new Pipe();
 						pipe.x = _tanks[i].x + _tanks[i].width / 2;
 						pipe.y = _tanks[i].y + _tanks[i].height;
-						pipe.distanceX = _tanks[j].x - _tanks[i].x;
-						pipe.distanceY = _tanks[j].y - _tanks[i].y;
+						pipe.distanceX = (_tanks[j].x - _tanks[i].x)/blockSize;
+						pipe.distanceY = (_tanks[j].y - _tanks[i].y)/blockSize;
 						pipe.drawPipe();
 						pipeLayer.addChild(pipe);
 						_pipes[i][j] = pipe;
@@ -83,6 +93,11 @@
 		
 		public function set currentState(currentState:State){
 			_currentState = currentState;
+			
+		}
+		
+		public function get currentState() :State{
+			return _currentState;
 			
 		}
 	}

@@ -41,6 +41,16 @@
 			return _flow;
 		}
 
+		public function get d():Array
+		{
+			return _d;
+		}
+
+		public function get e():Array
+		{
+			return _e;
+		}
+
 		public function get s():int
 		{
 			return _source;

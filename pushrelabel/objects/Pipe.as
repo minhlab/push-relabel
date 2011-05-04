@@ -23,27 +23,55 @@
 			while (this.numChildren>0){
 				this.removeChildAt(0);
 			}
-			var i:Number = 0;
-			for (i = 0; i<_distanceY-1;i++){
+			var i:int = 0;
+			var lInvertPipe, lPipe;
+
+			for (i = 0; i<_distanceY;i++){
 				var hPipe:PipeVertical = new PipeVertical();
 				hPipe.x = 0;
 				hPipe.y = i*blockSize;
-				this.addChild(hPipe);				
+				this.addChild(hPipe);
 			}
-			var lPipe:PipeL = new PipeL();
-			lPipe.x = 0;
-			lPipe.y = i*blockSize;
-			this.addChild(lPipe);
-			for (i = 1; i<_distanceX-1;i++){
-				var wPipe:PipeHorizontal = new PipeHorizontal();
-				wPipe.x = i*blockSize;
-				wPipe.y = lPipe.y+blockSize/2;
-				this.addChild(wPipe);
+			
+			if (_distanceX > 0) {
+				
+				lPipe = new PipeL();
+				lPipe.x = 0;
+				lPipe.y = i*blockSize;
+				this.addChild(lPipe);
+				
+				for (i = 1; i<_distanceX-1;i++){
+					var wPipe:PipeHorizontal = new PipeHorizontal();
+					wPipe.x = i*blockSize;
+					wPipe.y = lPipe.y+blockSize/2;
+					this.addChild(wPipe);
+				}
+				
+				lInvertPipe = new PipeLInvert();
+				lInvertPipe.x = i*blockSize;
+				lInvertPipe.y = lPipe.y;
+				this.addChild(lInvertPipe);
+				
+			} else {
+				
+				lInvertPipe = new PipeLInvert();
+				lInvertPipe.x = i*blockSize;
+				lInvertPipe.y = i*blockSize;
+				this.addChild(lInvertPipe);
+				
+				for (i = -1; i>_distanceX-1;i--){
+					var wPipe:PipeHorizontal = new PipeHorizontal();
+					wPipe.x = i*blockSize;
+					wPipe.y = lInvertPipe.y+blockSize/2;
+					this.addChild(wPipe);
+				}
+				
+				lPipe = new PipeL();
+				lPipe.x = 0;
+				lPipe.y = lInvertPipe.y;
+				this.addChild(lPipe);
+				
 			}
-			var lInvertPipe:PipeLInvert = new PipeLInvert();
-			lInvertPipe.x = i*blockSize;
-			lInvertPipe.y = lPipe.y;
-			this.addChild(lInvertPipe);
 		}
 		
 		public function startFlow(){

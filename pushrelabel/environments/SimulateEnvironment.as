@@ -14,6 +14,7 @@
 		private var _playing:Boolean = false;
 		private var _tracer:Tracer;
 		private var _simArea:SimulationArea;
+		private var _stateIndex:int = 0;
 		
 		public function SimulateEnvironment() {			
 			playBtn.addEventListener(MouseEvent.CLICK,playClick);
@@ -34,6 +35,11 @@
 		}
 		public function nextClick(e:MouseEvent){
 			this.playing = false;
+			if (_stateIndex < _tracer.getStateCount()-1) {
+				_stateIndex++;
+				trace(_tracer.getState(_stateIndex).network);
+				_simArea.currentState = _tracer.getState(_stateIndex);
+			}
 		}
 		public function backClick(e:MouseEvent){
 			this.playing = false;
