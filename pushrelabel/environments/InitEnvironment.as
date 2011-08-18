@@ -35,8 +35,7 @@
 		private var _startX:Number;
 		private var _startY:Number;
 		
-		private var _currentOperation:AbstractOperation = null;
-		
+		private var _currentOperation:AbstractOperation = null;		
 		
 		private var _frozen:Boolean = false;
 		public function InitEnvironment() {
@@ -133,7 +132,7 @@
 		public function loadClick(e:MouseEvent){
 			if (!_frozen){
 				resetGraphView();
-				FileIO.loadMatrixGraph("data.txt", function(evt:Event) {
+				FileIO.openMatrixGraph(function(evt:Event) {
 									trace(evt);
 									}, function (g:MatrixGraph) {
 										var i:Number;
@@ -157,7 +156,11 @@
 		}
 		public function saveClick(e:MouseEvent){
 			if (!_frozen){
-				_graphView.resetVertexIndex();
+				FileIO.saveMatrixGraph("data.txt",_graphView.toMatrixGraph(), function(evt:Event) {
+										trace(evt);
+									}, function () {
+										trace("ok");
+									});				
 			}
 		}
 		

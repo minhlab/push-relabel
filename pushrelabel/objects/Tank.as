@@ -14,7 +14,7 @@
 			_waterMC.x = 3;
 			_waterMC.height = 1;//_waterLevel*this.height;
 			this.addChildAt(_waterMC,0);	
-			this.addEventListener(Event.ENTER_FRAME,onEnterFrame);
+			//this.addEventListener(Event.ENTER_FRAME,onEnterFrame);
 		}
 		
 		public function onEnterFrame(e:Event){

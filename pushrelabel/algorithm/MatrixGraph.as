@@ -96,6 +96,17 @@
 			}
 			return s;
 		}
+		
+		public function toSString():String {
+			var s = "";
+			for (var i = 0; i < _size; i++) {
+				for (var j = 0; j < _size; j++) {
+					s += _matrix[i][j] + " ";
+				}
+				s += "\r\n";
+			}
+			return s;
+		}
 	}
 
 }

@@ -16,27 +16,28 @@
 		}
 		
 		override public function doOps(environment:InitEnvironment){
-			if (environment.selected is Vertex){				
-				if (Vertex(environment.selected).index != 1){
-					environment.frozen = true;
-					var editEdgeDlg:EditEdgeDlg = new EditEdgeDlg();
-					editEdgeDlg.show(function(dlg:EditEdgeDlg) {
-									 
-						var newEdge:Edge = environment.graphView.addEdge(_headVertex,Vertex(environment.selected),dlg.capacity);
-						if (newEdge!=null){
-							environment.edgeLayer.addChild(newEdge);
-							newEdge.addEventListener(MouseEvent.MOUSE_DOWN,environment.onMouseDown);
-						}
+			if (environment.selected is Vertex){	
+				if (Vertex(environment.selected).index != _headVertex.index){
+					if (Vertex(environment.selected).index != 1){
+						environment.frozen = true;
+						var editEdgeDlg:EditEdgeDlg = new EditEdgeDlg();
+						editEdgeDlg.show(function(dlg:EditEdgeDlg) {
+										 
+							var newEdge:Edge = environment.graphView.addEdge(_headVertex,Vertex(environment.selected),dlg.capacity);
+							if (newEdge!=null){
+								environment.edgeLayer.addChild(newEdge);
+								newEdge.addEventListener(MouseEvent.MOUSE_DOWN,environment.onMouseDown);
+							}
+							
+							environment.frozen = false;
+						}, function(dlb:EditEdgeDlg) {;
+							environment.frozen = false;
+						});
+						environment.removeDrag();
 						
-						environment.frozen = false;
-					}, function(dlb:EditEdgeDlg) {;
-						environment.frozen = false;
-					});
-					environment.removeDrag();
-					
-					environment.currentOperation = null;
-				}
-				
+						environment.currentOperation = null;
+					}
+				}				
 			}
 		}
 

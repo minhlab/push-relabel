@@ -14,7 +14,7 @@
 			return _flow;
 		}
 		override public function setFlowColor(color:ColorTransform){
-			_flow.colorTransform = color;
+			_flow.transform.colorTransform = color;
 		}
 	}
 	

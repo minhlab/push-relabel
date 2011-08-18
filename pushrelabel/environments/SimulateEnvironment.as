@@ -1,5 +1,6 @@
-﻿package pushrelabel.environments {
-	
+﻿package pushrelabel.environments
+{
+
 	import flash.display.MovieClip;
 	import pushrelabel.algorithm.Graph;
 	import flash.events.MouseEvent;
@@ -7,58 +8,130 @@
 	import pushrelabel.objects.Pipe;
 	import pushrelabel.algorithm.Tracer;
 	import pushrelabel.algorithm.MatrixGraph;
-	
-	
-	public class SimulateEnvironment extends AbstractEnvironment {
+	import flash.utils.setInterval;
+	import flash.utils.clearInterval;
+
+
+	public class SimulateEnvironment extends AbstractEnvironment
+	{
 
 		private var _playing:Boolean = false;
 		private var _tracer:Tracer;
 		private var _simArea:SimulationArea;
 		private var _stateIndex:int = 0;
-		
-		public function SimulateEnvironment() {			
+		private var playId:uint;
+
+		public function SimulateEnvironment()
+		{
 			playBtn.addEventListener(MouseEvent.CLICK,playClick);
 			pauseBtn.addEventListener(MouseEvent.CLICK,pauseClick);
 			stopBtn.addEventListener(MouseEvent.CLICK,stopClick);
 			nextBtn.addEventListener(MouseEvent.CLICK,nextClick);
 			backBtn.addEventListener(MouseEvent.CLICK,backClick);
 		}
-		
-		public function playClick(e:MouseEvent){
-			this.playing = true;
-		}
-		public function pauseClick(e:MouseEvent){
-			this.playing = false;
-		}
-		public function stopClick(e:MouseEvent){
-			this.playing = false;
-		}
-		public function nextClick(e:MouseEvent){
-			this.playing = false;
-			if (_stateIndex < _tracer.getStateCount()-1) {
-				_stateIndex++;
-				trace(_tracer.getState(_stateIndex).network);
-				_simArea.currentState = _tracer.getState(_stateIndex);
+
+		private function playSimulation()
+		{
+			if (sindex >= _tracer.getStateCount())
+			{
+				playing = false;
+			}
+			if (sindex < _tracer.getStateCount() - 1)
+			{
+				sindex++;
 			}
 		}
-		public function backClick(e:MouseEvent){
+
+		public function playClick(e:MouseEvent)
+		{
+			if (playing)
+			{
+				return;
+			}
+			this.playing = true;
+			playId = setInterval(playSimulation,500);
+		}
+
+		public function pauseClick(e:MouseEvent)
+		{
+			if (! playing)
+			{
+				return;
+			}
 			this.playing = false;
 		}
-		
-		public function set playing(playing:Boolean){
-			_playing = playing;
-			playBtn.visible = !_playing;
+
+		public function stopClick(e:MouseEvent)
+		{
+			if (! playing)
+			{
+				return;
+			}
+			this.playing = false;
+			sindex = 0;
 		}
-		
-		override public function onEnter(){
+
+		public function nextClick(e:MouseEvent)
+		{
+			this.playing = false;
+			if (sindex < _tracer.getStateCount() - 1)
+			{
+				sindex++;
+			}
+		}
+		public function backClick(e:MouseEvent)
+		{
+			this.playing = false;
+			if (sindex > 0)
+			{
+				sindex--;
+			}
+		}
+
+		public function get playing():Boolean
+		{
+			return _playing;
+		}
+
+		public function set playing(playing:Boolean)
+		{
+			if (_playing)
+			{
+				clearInterval(playId);
+			}
+			_playing = playing;
+			playBtn.visible = ! _playing;
+		}
+
+		private function get sindex():int
+		{
+			return _stateIndex;
+		}
+		private function set sindex(i:int)
+		{
+			_stateIndex = i;
+			_simArea.currentState = _tracer.getState(_stateIndex);
+			_queue.queue = _simArea.currentState.queue;
+		}
+
+		override public function onEnter()
+		{
+			playing = false;
+			if (_simArea != null)
+			{
+				removeChild(_simArea);
+			}
 			_graph = Main.instance.graph;
 			_tracer = new Tracer(MatrixGraph(_graph));
-			_simArea = new SimulationArea(this,_tracer.getState(0).network);
-			var scale:Number = Math.min(_simArea.height/height,_simArea.width/width);
+			_simArea = new SimulationArea(this,_tracer.getState(sindex));
+			sindex = 0;
+			var scale:Number = Math.min(500 / _simArea.height,600 / _simArea.width);
 			_simArea.scaleX = _simArea.scaleY = scale;
+			_simArea.x = (600 - _simArea.width)/2
+			_simArea.y = 20;
 			this.addChild(_simArea);
-			
+
 		}
 	}
-	
+
 }
